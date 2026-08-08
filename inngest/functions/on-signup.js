@@ -1,5 +1,6 @@
 import { sendMail } from "../../utils/mailer.js";
 import {inngest} from "../client.js";
+import {NonRetryableError} from "inngest";
 
 export const onUserSignup = inngest.createFunction(
     {id: "on-user-signup", retries:2},
