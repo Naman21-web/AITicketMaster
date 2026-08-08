@@ -7,7 +7,7 @@ import userRoutes from "./routes/user.js";
 import ticketRoutes from "./routes/ticket.js";
 import { inngest } from "./inngest/client.js";
 import { onTicketCreated } from "./inngest/functions/on-ticket-create.js";
-import { onTicketUpdated } from "./inngest/functions/on-ticket-update.js";
+import { onUserSignup } from "./inngest/functions/on-signup.js";
 
 dotenv.config();
 
@@ -21,13 +21,10 @@ app.use("/api/auth", userRoutes);
 app.use("/api/tickets", ticketRoutes);
 app.use("/api/inngest",serve({
     client: inngest,
-    functions: [onTicketCreated,onTicketUpdated]
+    functions: [onUserSignup,onTicketCreated]
 }));
 
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
+mongoose.connect(process.env.MONGO_URI).then(() => {
     console.log("Connected to MongoDB");
     app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
